@@ -1,0 +1,27 @@
+server:
+  port: 8080
+  context-path: /weather
+
+spring:
+  points:
+    refresh:
+      enabled: true
+    restart:
+      enabled: true
+
+management:
+  security:
+    enabled: false
+
+feign:
+  compression:
+    request:
+      enabled: true
+    mime-types: application/json
+    response:
+      enabled: true
+
+accu-weather:
+  ribbon:
+    listOfServers: http://dataservice.accuweather.com/
+  api-key: c1zOdS17H0B0wm3ClTvxJL33YxMIsGyX
