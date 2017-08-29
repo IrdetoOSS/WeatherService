@@ -23,15 +23,23 @@ public class WeatherServiceController {
     this.accuWeatherFeignClient = accuWeatherFeignClient;
   }
 
-  @GetMapping(value = "/regionInfo/{language}/{offset}", produces = APPLICATION_JSON_UTF8_VALUE)
-  public String regionInfo(final @PathVariable(value = "language") String language,
+  @GetMapping(value = "/regionInfo/{countryCode}/{language}/{offset}", produces = APPLICATION_JSON_UTF8_VALUE)
+  public String regionInfo(final @PathVariable(value = "countryCode") String countryCode,
+                           final @PathVariable(value = "language") String language,
                            final @PathVariable(value = "offset") int offset) {
-    return accuWeatherFeignClient.regionInfo(apiKey, language, offset);
+    return accuWeatherFeignClient.regionInfo(countryCode, language, offset, apiKey);
   }
 
-  @GetMapping(value = "/searchPostCode/{postCode}/{language}", produces = APPLICATION_JSON_UTF8_VALUE)
-  public String searchPostCode(final @PathVariable(value = "postCode") String postCode,
+  @GetMapping(value = "/searchPostCode/{countryCode}/{postCode}/{language}", produces = APPLICATION_JSON_UTF8_VALUE)
+  public String searchPostCode(final @PathVariable(value = "countryCode") String countryCode,
+                               final @PathVariable(value = "postCode") String postCode,
                                final @PathVariable(value = "language") String language) {
-    return accuWeatherFeignClient.searchPostCode(apiKey, postCode, language);
+    return accuWeatherFeignClient.searchPostCode(countryCode, postCode, language, apiKey);
+  }
+
+  @GetMapping(value = "/forecast/{locationKey}/{language}", produces = APPLICATION_JSON_UTF8_VALUE)
+  public String forecast(final @PathVariable(value = "locationKey") String locationKey,
+                               final @PathVariable(value = "language") String language) {
+    return accuWeatherFeignClient.forecast(locationKey, language, apiKey);
   }
 }

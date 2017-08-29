@@ -11,20 +11,31 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public interface AccuWeatherFeignClient {
 
   @RequestMapping(
-      value = "locations/v1/adminareas/nl?apikey={apiKey}&language={language}&offset={offset}",
+      value = "locations/v1/adminareas/{countryCode}?apikey={apiKey}&language={language}&offset={offset}",
       method = GET,
       produces = APPLICATION_JSON_UTF8_VALUE
   )
-  String regionInfo(final @PathVariable(value = "apiKey") String apiKey,
+  String regionInfo(final @PathVariable(value = "countryCode") String countryCode,
                     final @PathVariable(value = "language") String language,
-                    final @PathVariable(value = "offset") int offset);
+                    final @PathVariable(value = "offset") int offset,
+                    final @PathVariable(value = "apiKey") String apiKey);
 
   @RequestMapping(
-      value = "locations/v1/postalcodes/nl/search?apikey={apiKey}&q={postCode}&language={language}",
+      value = "locations/v1/postalcodes/{countryCode}/search?apikey={apiKey}&q={postCode}&language={language}",
       method = GET,
       produces = APPLICATION_JSON_UTF8_VALUE
   )
-  String searchPostCode(final @PathVariable(value = "apiKey") String apiKey,
+  String searchPostCode(final @PathVariable(value = "countryCode") String countryCode,
                         final @PathVariable(value = "postCode") String postCode,
-                        final @PathVariable(value = "language") String language);
+                        final @PathVariable(value = "language") String language,
+                        final @PathVariable(value = "apiKey") String apiKey);
+
+  @RequestMapping(
+      value = "forecasts/v1/daily/1day/{locationKey}?apikey={apiKey}&language={language}",
+      method = GET,
+      produces = APPLICATION_JSON_UTF8_VALUE
+  )
+  String forecast(final @PathVariable("locationKey") String locationKey,
+                  final @PathVariable(value = "language") String language,
+                  final @PathVariable("apiKey") String apiKey);
 }
